@@ -11,28 +11,60 @@ class ViewController : UIViewController {
     // If data is successfully retrieved from the server, we can parse it here
     func parseMyJSON(theData : NSData) {
         
-        // Print the provided data
-        print("")
-        print("====== the data provided to parseMyJSON is as follows ======")
-        print(theData)
         
         // De-serializing JSON can throw errors, so should be inside a do-catch structure
         do {
             
             // Do the initial de-serialization
             // Source JSON is here:
-            // http://www.learnswiftonline.com/Samples/subway.json
+            // http://feeds.bikesharetoronto.com/stations/stations.json
             //
-            let json = try NSJSONSerialization.JSONObjectWithData(theData, options: NSJSONReadingOptions.AllowFragments) as! AnyObject
+            let json = try NSJSONSerialization.JSONObjectWithData(theData, options: NSJSONReadingOptions.AllowFragments)as! AnyObject
             
-            // Print retrieved JSON
-            print("")
-            print("====== the retrieved JSON is as follows ======")
-            print(json)
+            if let stationData = json as? [String: AnyObject] {
+                print("stationData is: \(stationData["executionTime"])")
+            } else {
+                print("could not parse station data")
+            }
             
-            // Now we can parse this...
-            print("")
-            print("Now, add your parsing code here...")
+            if let beanList = json as? AnyObject {
+                //print("beanList is: \(beanList["stationBeanList"])")
+
+                if let beans = beanList["stationBeanList"] as? [AnyObject] {
+                    
+                    for bean in beans {
+                        
+                        if let stationDetails = bean as? [String: AnyObject]{
+                            
+                            //print("station name is \(stationDetails["stationName"])")
+                            
+                            guard let name : String = stationDetails["stationName"] as? String,
+                            let latitude : Double = stationDetails["latitude"] as? Double,
+                            let longitude : Double = stationDetails["longitude"] as? Double
+                         else {
+                                print("Error loading")
+                                return
+                            }
+                            
+                            print("stationName is \(name)")
+                            print("latitude is \(latitude)")
+                            print("longitude is \(longitude)")
+                            
+                            
+                        }
+                        
+                        
+                        
+                    }
+                    
+
+
+                }
+                
+                
+            } else {
+                print("error retreving bean list ")
+            }
             
             // Now we can update the UI
             // (must be done asynchronously)
@@ -70,17 +102,6 @@ class ViewController : UIViewController {
                 // If the request was successful, parse the given data
                 if r.statusCode == 200 {
         
-                    // Show debug information (if a request was completed successfully)            
-                    print("")
-                    print("====== data from the request follows ======")
-                    print(data)
-                    print("")
-                    print("====== response codes from the request follows ======")
-                    print(response)
-                    print("")
-                    print("====== errors from the request follows ======")
-                    print(error)
-            
                     if let d = data {
                         
                         // Parse the retrieved data
@@ -95,7 +116,7 @@ class ViewController : UIViewController {
         }
         
         // Define a URL to retrieve a JSON file from
-        let address : String = "http://www.learnswiftonline.com/Samples/subway.json"
+        let address : String = "http://feeds.bikesharetoronto.com/stations/stations.json"
         
         // Try to make a URL request object
         if let url = NSURL(string: address) {
