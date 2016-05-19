@@ -54,9 +54,10 @@
             </dict>
         </dict>
     </dict>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>The application uses this information to find the bike station nearest you.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>The application uses this information to find the bike station nearest you.</string>
+
 </dict>
 </plist>
-<key>NSLocationWhenInUseUsageDescription</key>
-<string>The application uses this information to find the bike station nearest you.</string>
-<key>NSLocationAlwaysUsageDescription</key>
-<string>The application uses this information to find the bike station nearest you.</string>

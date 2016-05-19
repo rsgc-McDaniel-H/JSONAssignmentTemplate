@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3F14C6A21CEE29F7002ED43F /* LocationTester.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 3F14C6A11CEE29F7002ED43F /* LocationTester.gpx */; };
 		3F14C6DE1CEE4BCF002ED43F /* LocationTester23.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 3F14C6DD1CEE4BCF002ED43F /* LocationTester23.gpx */; };
+		3F14C6E21CEE5C9D002ED43F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F14C6E11CEE5C9D002ED43F /* MapKit.framework */; };
 		3FEF5A261CED067300F41333 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEF5A251CED067300F41333 /* AppDelegate.swift */; };
 		3FEF5A281CED067300F41333 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEF5A271CED067300F41333 /* ViewController.swift */; };
 		3FEF5A2B1CED067400F41333 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FEF5A291CED067400F41333 /* Main.storyboard */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		3F14C6A11CEE29F7002ED43F /* LocationTester.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = LocationTester.gpx; path = ../../../../../../Downloads/LocationTester.gpx; sourceTree = "<group>"; };
 		3F14C6DD1CEE4BCF002ED43F /* LocationTester23.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = LocationTester23.gpx; path = ../../../../../../Downloads/LocationTester23.gpx; sourceTree = "<group>"; };
+		3F14C6E11CEE5C9D002ED43F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3FEF5A221CED067300F41333 /* BikeStationFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BikeStationFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FEF5A251CED067300F41333 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FEF5A271CED067300F41333 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F14C6E21CEE5C9D002ED43F /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +84,7 @@
 		3FEF5A191CED067300F41333 = {
 			isa = PBXGroup;
 			children = (
+				3F14C6E11CEE5C9D002ED43F /* MapKit.framework */,
 				3F14C6DD1CEE4BCF002ED43F /* LocationTester23.gpx */,
 				3F14C6A11CEE29F7002ED43F /* LocationTester.gpx */,
 				3FEF5A241CED067300F41333 /* BikeStationFinder */,
@@ -200,6 +204,11 @@
 					3FEF5A211CED067300F41333 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = W46W39HS9U;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					3FEF5A351CED067400F41333 = {
 						CreatedOnToolsVersion = 7.3;

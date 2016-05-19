@@ -54,29 +54,37 @@ class ViewController : UIViewController, CLLocationManagerDelegate {
                             
                             //print("station name is \(stationDetails["stationName"])")
                             
-                            guard let name : String = stationDetails["stationName"] as? String,
-                                let latitude : Double = stationDetails["latitude"] as? Double,
-                                let longitude : Double = stationDetails["longitude"] as? Double
+                            guard let stationName : String = stationDetails["stationName"] as? String,
+                                let stationLatitude : Double = stationDetails["latitude"] as? Double,
+                                let stationLongitude : Double = stationDetails["longitude"] as? Double
                                 else {
                                     print("Error loading")
                                     return
                             }
                             
-                            print("stationName is \(name)")
-                            print("latitude is \(latitude)")
-                            print("longitude is \(longitude)")
+                            print("stationName is \(stationName)")
+                            print("latitude is \(stationLatitude)")
+                            print("longitude is \(stationLongitude)")
+                           
+
+                            // Now we can update the UI
+                            // (must be done asynchronously)
                             
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.jsonResult.text = "The Station closest to you is \(name)"
-                            }
-                            dispatch_async(dispatch_get_main_queue()) {
-                                
-                                var infoToShow : String = "JSON retrieved\n\n."
-                                infoToShow += "Your latitude is: \(self.latitude).\n"
-                                infoToShow += "Your longitude is: \(self.longitude).\n"
-                                
-                                self.jsonResult.text = infoToShow
-                                
+                            if stationName == "Ted Rogers Way " {
+                                print("inside if statement Ted Rogers Way")
+                                dispatch_async(dispatch_get_main_queue()) {
+                                    
+                                    var infoToShow : String = "JSON retrieved\n\n."
+                                    infoToShow += "Your latitude is: \(self.latitude).\n"
+                                    infoToShow += "Your longitude is: \(self.longitude).\n"
+                                    infoToShow += "Closest station is: \(stationName).\n"
+                                    infoToShow += "Closest station latitude is: \(stationLatitude).\n"
+                                    infoToShow += "Closest station longitude is: \(stationLongitude).\n"
+                                    
+                                    self.jsonResult.text = infoToShow
+                                    
+                                }
+
                             }
                             
                         }
@@ -90,8 +98,7 @@ class ViewController : UIViewController, CLLocationManagerDelegate {
                 print("error retreving bean list ")
             }
             
-            // Now we can update the UI
-            // (must be done asynchronously)
+           
            
             
         } catch let error as NSError {
@@ -174,21 +181,7 @@ class ViewController : UIViewController, CLLocationManagerDelegate {
         // Sub-classes of UIViewController must invoke the superclass method viewDidLoad in their
         // own version of viewDidLoad()
         super.viewDidLoad()
-        
-        /*
-         * Location services setup
-         */
-        // What class is the delegate for CLLocationManager? (By passing "self" we are saying it is this view controller)
-        locationManager.delegate = self
-        // Set the level of location accuracy desired
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        // Prompt the user for permission to obtain their location when the app is running
-        // NOTE: Must add these values to the Info.plist file in the project
-        // 	  <key>NSLocationWhenInUseUsageDescription</key>
-        //    <string>The application uses this information to find the cooling centre nearest you.</string>
-        locationManager.requestWhenInUseAuthorization()
-        // Now try to obtain the user's location (this runs aychronously)
-        locationManager.startUpdatingLocation()
+    
         
         // Make the view's background be gray
         view.backgroundColor = UIColor.lightGrayColor()
@@ -254,6 +247,21 @@ class ViewController : UIViewController, CLLocationManagerDelegate {
         
         // Activate all defined constraints
         NSLayoutConstraint.activateConstraints(allConstraints)
+        
+        /*
+         * Location services setup
+         */
+        // What class is the delegate for CLLocationManager? (By passing "self" we are saying it is this view controller)
+        locationManager.delegate = self
+        // Set the level of location accuracy desired
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        // Prompt the user for permission to obtain their location when the app is running
+        // NOTE: Must add these values to the Info.plist file in the project
+        // 	  <key>NSLocationWhenInUseUsageDescription</key>
+        //    <string>The application uses this information to find the cooling centre nearest you.</string>
+        locationManager.requestWhenInUseAuthorization()
+        // Now try to obtain the user's location (this runs aychronously)
+        locationManager.startUpdatingLocation()
        
         
     }
@@ -275,7 +283,6 @@ class ViewController : UIViewController, CLLocationManagerDelegate {
         // Report the location
         print("Location obtained at startup...")
         print("Latitude: \(latitude)")
-    
         print("Longitude: \(longitude)")
     }
     // Required method for CLLocationManagerDelegate
