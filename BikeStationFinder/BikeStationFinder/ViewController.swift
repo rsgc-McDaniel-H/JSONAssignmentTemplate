@@ -7,15 +7,22 @@
 //
 
 import UIKit
+import CoreLocation
 
-class ViewController : UIViewController {
+class ViewController : UIViewController, CLLocationManagerDelegate {
     
     // Views that need to be accessible to all methods
     let jsonResult = UILabel()
+    var locationManager : CLLocationManager = CLLocationManager()
+    var latitude : String = ""
+    var longitude : String = ""
     
     // If data is successfully retrieved from the server, we can parse it here
     func parseMyJSON(theData : NSData) {
         
+       // var locationManager : CLLocationManager = CLLocationManager()
+        
+       
         
         // De-serializing JSON can throw errors, so should be inside a do-catch structure
         do {
@@ -25,6 +32,10 @@ class ViewController : UIViewController {
             // http://feeds.bikesharetoronto.com/stations/stations.json
             //
             let json = try NSJSONSerialization.JSONObjectWithData(theData, options: NSJSONReadingOptions.AllowFragments)as! AnyObject
+            
+            // Now we can update the UI
+            // (must be done asynchronously)
+            
             
             if let stationData = json as? [String: AnyObject] {
                 print("stationData is: \(stationData["executionTime"])")
@@ -58,6 +69,16 @@ class ViewController : UIViewController {
                             dispatch_async(dispatch_get_main_queue()) {
                                 self.jsonResult.text = "The Station closest to you is \(name)"
                             }
+                            dispatch_async(dispatch_get_main_queue()) {
+                                
+                                var infoToShow : String = "JSON retrieved\n\n."
+                                infoToShow += "Your latitude is: \(self.latitude).\n"
+                                infoToShow += "Your longitude is: \(self.longitude).\n"
+                                
+                                self.jsonResult.text = infoToShow
+                                
+                            }
+                            
                         }
                 
                     }
@@ -154,6 +175,21 @@ class ViewController : UIViewController {
         // own version of viewDidLoad()
         super.viewDidLoad()
         
+        /*
+         * Location services setup
+         */
+        // What class is the delegate for CLLocationManager? (By passing "self" we are saying it is this view controller)
+        locationManager.delegate = self
+        // Set the level of location accuracy desired
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        // Prompt the user for permission to obtain their location when the app is running
+        // NOTE: Must add these values to the Info.plist file in the project
+        // 	  <key>NSLocationWhenInUseUsageDescription</key>
+        //    <string>The application uses this information to find the cooling centre nearest you.</string>
+        locationManager.requestWhenInUseAuthorization()
+        // Now try to obtain the user's location (this runs aychronously)
+        locationManager.startUpdatingLocation()
+        
         // Make the view's background be gray
         view.backgroundColor = UIColor.lightGrayColor()
         
@@ -218,6 +254,36 @@ class ViewController : UIViewController {
         
         // Activate all defined constraints
         NSLayoutConstraint.activateConstraints(allConstraints)
+       
+        
+    }
+    // Required method for CLLocationManagerDelegate
+    // This method runs when the location of the user has been updated.
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        // We now have the user's location, so stop finding their location.
+        // (Looking for current location is a battery drain)
+        self.locationManager.stopUpdatingLocation()
+        
+        // Set the most recent location found
+        let latestLocation = locations.last
+        
+        // Format the current location as strings with four decimal places of accuracy
+        latitude = String(format: "%.4f", latestLocation!.coordinate.latitude)
+        longitude = String(format: "%.4f", latestLocation!.coordinate.longitude)
+        
+        // Report the location
+        print("Location obtained at startup...")
+        print("Latitude: \(latitude)")
+    
+        print("Longitude: \(longitude)")
+    }
+    // Required method for CLLocationManagerDelegate
+    // This method will be run when there is an error determing the user's location
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        
+        // Report the error
+        print("didFailWithError \(error)")
         
     }
     
