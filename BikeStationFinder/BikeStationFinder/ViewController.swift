@@ -53,33 +53,46 @@ class ViewController : UIViewController, CLLocationManagerDelegate {
                         if let stationDetails = bean as? [String: AnyObject]{
                             
                             //print("station name is \(stationDetails["stationName"])")
-                            
                             guard let stationName : String = stationDetails["stationName"] as? String,
+                                
+                                 let bikes : Double = stationDetails["availableBikes"] as? Double,
+                               
+                                let availibility : String = stationDetails["statusValue"] as?
+                                String,
                                 let stationLatitude : Double = stationDetails["latitude"] as? Double,
                                 let stationLongitude : Double = stationDetails["longitude"] as? Double
+                             
+                              //  let lastCommunicationTime : Double = stationDetails["Docks"] as? Double
+                    
+                               // as? Double
+                            
                                 else {
                                     print("Error loading")
                                     return
                             }
-                            
-                            print("stationName is \(stationName)")
+                            //print("That are \(lastCommunicationTime)"
+                            print("The station is \(availibility)")
+                            print("The amount of available bikes are \(bikes)")
+                            print("station Name is \(stationName)")
                             print("latitude is \(stationLatitude)")
                             print("longitude is \(stationLongitude)")
-                           
-
+                            
                             // Now we can update the UI
                             // (must be done asynchronously)
                             
-                            if stationName == "Ted Rogers Way " {
+                            if stationName == "Jarvis St / Carlton St" {
                                 print("inside if statement Ted Rogers Way")
                                 dispatch_async(dispatch_get_main_queue()) {
                                     
                                     var infoToShow : String = "JSON retrieved\n\n."
                                     infoToShow += "Your latitude is: \(self.latitude).\n"
                                     infoToShow += "Your longitude is: \(self.longitude).\n"
-                                    infoToShow += "Closest station is: \(stationName).\n"
+                                    infoToShow += "The Station is: \(availibility).\n"
+                                    infoToShow += "The amount of available bikes are : \(bikes).\n"
+                                    infoToShow += "Your Favorite Station is : \(stationName).\n"
                                     infoToShow += "Closest station latitude is: \(stationLatitude).\n"
                                     infoToShow += "Closest station longitude is: \(stationLongitude).\n"
+                                  //  infoToShow += "Station is: \(statusValue).\n"
                                     
                                     self.jsonResult.text = infoToShow
                                     
@@ -191,6 +204,7 @@ class ViewController : UIViewController, CLLocationManagerDelegate {
          */
         
         // Set the label text and appearance
+    
         jsonResult.text = "Information will load here"
         jsonResult.font = UIFont.systemFontOfSize(12)
         jsonResult.numberOfLines = 0   // makes number of lines dynamic
@@ -237,7 +251,7 @@ class ViewController : UIViewController, CLLocationManagerDelegate {
         
         // Define the vertical constraints
         let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-50-[getData]-[title]",
+            "V:|-50-[getData][title]",
             options: [],
             metrics: nil,
             views: viewsDictionary)
