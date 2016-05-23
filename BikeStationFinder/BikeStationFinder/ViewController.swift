@@ -87,7 +87,7 @@ class ViewController : UIViewController, CLLocationManagerDelegate {
                                 print("inside if statement Ted Rogers Way")
                                 dispatch_async(dispatch_get_main_queue()) {
                                     
-                                    var infoToShow : String = "JSON retrieved\n\n."
+                                    var infoToShow : String = "Information For your Station Retrieved\n\n."
                                     infoToShow += "The Station is: \(availibility).\n"
                                      infoToShow += "The amount of available bikes are : \(bikes).\n"
                                     infoToShow += "The last check was at : \(Time).\n"
@@ -231,7 +231,7 @@ class ViewController : UIViewController, CLLocationManagerDelegate {
         getData.addTarget(self, action: #selector(ViewController.getMyJSON), forControlEvents: UIControlEvents.TouchUpInside)
         
         // Set the button's title
-        getData.setTitle("Get my JSON!", forState: UIControlState.Normal)
+        getData.setTitle("Get my Bike Station Information", forState: UIControlState.Normal)
         
         // Required to auto layout this button
         getData.translatesAutoresizingMaskIntoConstraints = false
