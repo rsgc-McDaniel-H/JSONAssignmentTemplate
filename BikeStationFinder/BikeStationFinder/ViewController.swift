@@ -60,8 +60,10 @@ class ViewController : UIViewController, CLLocationManagerDelegate {
                                 let availibility : String = stationDetails["statusValue"] as?
                                 String,
                                 let stationLatitude : Double = stationDetails["latitude"] as? Double,
-                                let stationLongitude : Double = stationDetails["longitude"] as? Double
-                             
+                                let stationLongitude : Double = stationDetails["longitude"]
+                                as? Double,
+                                let Time : String  = stationDetails["lastCommunicationTime"] as? String
+                            
                               //  let lastCommunicationTime : Double = stationDetails["Docks"] as? Double
                     
                                // as? Double
@@ -73,6 +75,7 @@ class ViewController : UIViewController, CLLocationManagerDelegate {
                             //print("That are \(lastCommunicationTime)"
                             print("The station is \(availibility)")
                             print("The amount of available bikes are \(bikes)")
+                            print("The last communication time was \(Time)")
                             print("station Name is \(stationName)")
                             print("latitude is \(stationLatitude)")
                             print("longitude is \(stationLongitude)")
@@ -85,13 +88,15 @@ class ViewController : UIViewController, CLLocationManagerDelegate {
                                 dispatch_async(dispatch_get_main_queue()) {
                                     
                                     var infoToShow : String = "JSON retrieved\n\n."
+                                    infoToShow += "The Station is: \(availibility).\n"
+                                     infoToShow += "The amount of available bikes are : \(bikes).\n"
+                                    infoToShow += "The last check was at : \(Time).\n"
+                                     infoToShow += "Your Favorite Station is : \(stationName).\n"
+
+                                    infoToShow += "Yor favorite station's latitude is: \(stationLatitude).\n"
+                                    infoToShow += "Yor favorite station's longitude is: \(stationLongitude).\n"
                                     infoToShow += "Your latitude is: \(self.latitude).\n"
                                     infoToShow += "Your longitude is: \(self.longitude).\n"
-                                    infoToShow += "The Station is: \(availibility).\n"
-                                    infoToShow += "The amount of available bikes are : \(bikes).\n"
-                                    infoToShow += "Your Favorite Station is : \(stationName).\n"
-                                    infoToShow += "Closest station latitude is: \(stationLatitude).\n"
-                                    infoToShow += "Closest station longitude is: \(stationLongitude).\n"
                                   //  infoToShow += "Station is: \(statusValue).\n"
                                     
                                     self.jsonResult.text = infoToShow
