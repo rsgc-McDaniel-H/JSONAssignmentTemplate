@@ -83,7 +83,7 @@ class ViewController : UIViewController, CLLocationManagerDelegate {
                             // Now we can update the UI
                             // (must be done asynchronously)
                             
-                            if stationName == "Jarvis St / Carlton St" {
+                            if stationName == "St George St / Bloor St W" {
                                 print("inside if statement Ted Rogers Way")
                                 dispatch_async(dispatch_get_main_queue()) {
                                     
