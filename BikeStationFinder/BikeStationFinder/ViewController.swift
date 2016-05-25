@@ -8,8 +8,15 @@
 
 import UIKit
 import CoreLocation
+import MapKit
+//import CoreLocation
+
 
 class ViewController : UIViewController, CLLocationManagerDelegate {
+    
+    //@IBOutlet weak var MapView: MKMapView!
+    
+    
     
     // Views that need to be accessible to all methods
     let jsonResult = UILabel()
